@@ -1,0 +1,51 @@
+The first 84 bytes are seperated into 52 byte elf header and 32 byte program header. Copying these 84 bytes into a file allows you to append assembly instructions providing that you know what bytes relate to OP CODES.
+
+
+You can use OD to dump hex bytes where An = dont display offset and tx1 = 2 hex digits.
+
+od -An -tx1 <FILENAME>
+
+# To copy x amount of bytes from a file use head
+
+head -c 84 elfheader.bin > test84.bin
+
+
+
+Disassembly:
+
+
+To disassemble a file use:
+gdb ./test
+
+break *_start
+
+run
+disas
+
+
+# To translate the bytes to instructions
+
+x/4b _start  # where 4b represents 4 bytes
+x/4b _start+4  # gets the next for bytes
+
+Alternatively instead of specifying a label for the offset just put the addr
+
+x/4b 0x8054 
+
+# To get opcode translation from the raw assembly code using AS:
+
+as -Wa ret.s -o ret.o
+
+
+# To write over a section of bytes using printf and dd:
+
+printf "\x10" |dd of=test.bin bs=1 seek=81 count=1 conv=notrunc
+   where: bs = amount of bytes to treat
+          seek = start position byte starting from the beginning of file
+          count = the amount of bytes over that you want to write  
+
+
+
+
+
+
