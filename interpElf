@@ -1,0 +1,61 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+  then
+  echo "Incorrect arguments. Please use $0 <FILENAME>"
+  exit
+fi
+
+# if we got a file then process it..
+
+COMMAND=`od -tx1 -An $1`
+
+strarray=($COMMAND)
+
+
+printf "Elf Magic / padding: "
+echo ${strarray[@]:0:15}
+printf "e_type: "
+echo ${strarray[@]:16:2}
+printf "e_machine: "
+echo ${strarray[@]:18:2}
+printf "e_version: "
+echo ${strarray[@]:20:4}
+printf "e_entry: "
+echo ${strarray[@]:24:4}
+printf "e_phoff: "
+echo ${strarray[@]:28:4}
+printf "e_shoff: "
+echo ${strarray[@]:32:4}
+printf "e_flags: "
+echo ${strarray[@]:36:4}
+printf "e_ehsize: "
+echo ${strarray[@]:40:2}
+printf "e_phentsize: "
+echo ${strarray[@]:42:2}
+printf "e_phnum: "
+echo ${strarray[@]:44:2}
+printf "e_shentsize: "
+echo ${strarray[@]:46:2}
+printf "e_shnum: "
+echo ${strarray[@]:48:2}  
+printf "e_shstrndx: "
+echo ${strarray[@]:50:2}
+echo  "-----------------------------------------------------------------"
+printf "p_type: "
+echo ${strarray[@]:52:4}
+printf "p_offset: "
+echo ${strarray[@]:56:4}
+printf "p_vaddr: "
+echo ${strarray[@]:60:4}
+printf "p_paddr: "
+echo ${strarray[@]:64:4}
+printf "p_filesz: "
+echo ${strarray[@]:68:4}
+printf "p_memsz: "
+echo ${strarray[@]:72:4}
+printf "np_flags: "
+echo ${strarray[@]:76:4}
+printf "p_align: "
+echo ${strarray[@]:80:4}
+
